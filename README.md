@@ -8,6 +8,11 @@
 make helm-update
 ```
 
+### Initialise Namespaces
+```sh
+make create-ns
+```
+
 ### Deploy Control Center and Nginx Ingress Controller
 ```sh
 make deploy-c3 deploy-nginx
