@@ -9,6 +9,7 @@ helm-update:
 	# Enable confluent repo
 	#################################################################
 	helm repo add confluentinc https://confluentinc.github.io/cp-helm-charts/
+	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 	helm repo update
 
 .PHONY: create-ns
@@ -25,7 +26,7 @@ deploy-kafka1:
 	#################################################################
 	#
 	kubectl config set-context --current --namespace=$(KAFKA_NS1)
-	helm upgrade --install -f kafka-1.yaml k1 confluentinc/cp-helm-charts
+	helm upgrade --install -f releases/kafka-1.yaml k1 confluentinc/cp-helm-charts
 
 .PHONY: deploy-kafka2
 deploy-kafka2:
@@ -34,7 +35,7 @@ deploy-kafka2:
 	#################################################################
 	#
 	kubectl config set-context --current --namespace=$(KAFKA_NS2)
-	helm upgrade --install -f kafka-2.yaml k2 confluentinc/cp-helm-charts
+	helm upgrade --install -f releases/kafka-2.yaml k2 confluentinc/cp-helm-charts
 
 .PHONY: deploy-c3
 deploy-c3:
@@ -42,8 +43,8 @@ deploy-c3:
 	# Deploy Kafka Control Center
 	#################################################################
 	kubectl config set-context --current --namespace=$(KAFKA_C3_NS)
-	helm upgrade --install -f kafka-c3.yaml c3 confluentinc/cp-helm-charts
-	kubectl apply -f c3-ingress.yaml
+	helm upgrade --install -f releases/kafka-c3.yaml c3 confluentinc/cp-helm-charts
+	kubectl apply -f workload/c3-ingress.yaml
 
 .PHONY: deploy-nginx
 deploy-nginx:
@@ -51,4 +52,11 @@ deploy-nginx:
 	# Deploy nginx
 	#################################################################
 	kubectl config set-context --current --namespace=$(INGRESS_NS)
-	helm upgrade --install nginx stable/nginx-ingress
+	helm upgrade --install nginx ingress-nginx/ingress-nginx
+
+.PHONY: clean-up
+clean-up:
+	kubectl delete ns $(KAFKA_NS1)
+	kubectl delete ns $(KAFKA_NS2)
+	kubectl delete ns $(KAFKA_C3_NS)
+	kubectl delete ns $(INGRESS_NS)

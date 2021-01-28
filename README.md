@@ -17,3 +17,8 @@ make deploy-c3 deploy-nginx
 ```sh
 make deploy-kafka1 deploy-kafka2
 ```
+
+## Cleanup
+```sh
+make clean-up
+```
