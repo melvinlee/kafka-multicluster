@@ -43,5 +43,5 @@ cp-control-center:
 
   configurationOverrides:
     "name": "c3"
-    "kafka.kafka-1.bootstrap.servers": "PLAINTEXT://k1-cp-kafka-0.k1-cp-kafka-headless.cluster-1:9092"
-    "kafka.kafka-2.bootstrap.servers": "PLAINTEXT://k2-cp-kafka-0.k2-cp-kafka-headless.cluster-2:9092"
+    "kafka.k1.bootstrap.servers": "PLAINTEXT://k1-cp-kafka-0.k1-cp-kafka-headless.cluster-1:9092,k1-cp-kafka-1.k1-cp-kafka-headless.cluster-1:9092,k1-cp-kafka-2.k1-cp-kafka-headless.cluster-1:9092"
+    "kafka.k2.bootstrap.servers": "PLAINTEXT://k2-cp-kafka-0.k2-cp-kafka-headless.cluster-2:9092,k2-cp-kafka-1.k2-cp-kafka-headless.cluster-2:9092"
